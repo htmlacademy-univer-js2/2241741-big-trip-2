@@ -1,10 +1,14 @@
-import {render, RenderPosition} from './render';
-import Filter from './view/filters';
-import Trip from './presenter/trip';
+import { render } from './render.js';
+import TripPresenter from './presenter/presenter.js';
+import FilterView from './view/filter-view.js';
+import PointsModel from './model/points-model.js';
 
-const filterContainer = document.querySelector('.trip-controls__filters');
-const tripContainer = document.querySelector('.trip-events');
-const tripPresenter = new Trip({container: tripContainer});
+const siteMainElement = document.querySelector('.page-main');
+const siteHeaderElement = document.querySelector('.trip-main');
 
-render(new Filter(), filterContainer, RenderPosition.BEFOREEND);
-tripPresenter.init();
+const tripPresenter = new TripPresenter(siteMainElement.querySelector('.trip-events'));
+const pointModel = new PointsModel();
+
+render(new FilterView(), siteHeaderElement.querySelector('.trip-controls__filters'));
+
+tripPresenter.init(siteMainElement.querySelector('.trip-events'), pointModel);
